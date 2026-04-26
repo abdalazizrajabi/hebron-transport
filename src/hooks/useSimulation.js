@@ -1,8 +1,9 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import {
-  ROUTES, INITIAL_BUSES, INITIAL_TRAFFIC_LIGHTS, INITIAL_PARKING,
+  ROUTES, INITIAL_BUSES, INITIAL_PARKING,
   INITIAL_INCIDENTS, AMBULANCE_ROUTE, AGENT_LOG_TEMPLATES,
 } from '../data/mockData';
+import { fetchOSRMRoute } from '../utils/fetchRoute';
 
 let logSeq = 1;
 
@@ -12,7 +13,7 @@ const interpolate = (bus) => {
   const cur = pts[bus.waypointIndex];
   const nextIdx = (bus.waypointIndex + 1) % pts.length;
   const nxt = pts[nextIdx];
-  const p = bus.progress + 0.18;
+  const p = bus.progress + 0.025;
 
   if (p >= 1) {
     return {
@@ -35,22 +36,21 @@ const interpolate = (bus) => {
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
 const makeLog = (agent, message, type) => ({
-  id: logSeq++,
-  agent,
-  message,
-  type,
-  timestamp: new Date(),
+  id: logSeq++, agent, message, type, timestamp: new Date(),
 });
 
 export const useSimulation = () => {
-  const [buses,         setBuses]         = useState(INITIAL_BUSES);
-  const [trafficLights, setTrafficLights] = useState(INITIAL_TRAFFIC_LIGHTS);
-  const [parking,       setParking]       = useState(INITIAL_PARKING);
-  const [incidents,     setIncidents]     = useState(INITIAL_INCIDENTS);
-  const [agentLogs,     setAgentLogs]     = useState([]);
-  const [ambulanceActive, setAmbulanceActive] = useState(false);
-  const [ambulancePos,    setAmbulancePos]    = useState(AMBULANCE_ROUTE[0]);
-  const [showReport,      setShowReport]      = useState(false);
+  const [buses,          setBuses]         = useState(INITIAL_BUSES);
+  const [parking,        setParking]       = useState(INITIAL_PARKING);
+  const [incidents,      setIncidents]     = useState(INITIAL_INCIDENTS);
+  const [agentLogs,      setAgentLogs]     = useState([]);
+  const [ambulanceActive,setAmbulanceActive] = useState(false);
+  const [ambulancePos,   setAmbulancePos]  = useState(AMBULANCE_ROUTE[0]);
+  const [showReport,     setShowReport]    = useState(false);
+
+  const [roadRoutes, setRoadRoutes] = useState(
+    Object.fromEntries(Object.entries(ROUTES).map(([id, r]) => [id, r.waypoints]))
+  );
 
   const ambIdxRef = useRef(0);
 
@@ -58,27 +58,27 @@ export const useSimulation = () => {
     setAgentLogs((prev) => [log, ...prev].slice(0, 60));
   }, []);
 
-  // ── Bus movement every 2 s ──────────────────────────────────────────────
+  // ── Fetch road-snapped routes from OSRM on mount ──────────────────────────
   useEffect(() => {
-    const t = setInterval(() => setBuses((prev) => prev.map(interpolate)), 2000);
+    const fetchAll = async () => {
+      const updates = {};
+      for (const [id, route] of Object.entries(ROUTES)) {
+        updates[id] = await fetchOSRMRoute(route.waypoints);
+      }
+      setRoadRoutes(updates);
+      pushLog(makeLog('Routing Agent', 'Road network loaded — routes snapped to real Hebron streets', 'routing'));
+    };
+    fetchAll();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // ── Bus movement every 3 s (was 2 s) ─────────────────────────────────────
+  useEffect(() => {
+    const t = setInterval(() => setBuses((prev) => prev.map(interpolate)), 5000);
     return () => clearInterval(t);
   }, []);
 
-  // ── Traffic-light cycling every 6 s ────────────────────────────────────
-  useEffect(() => {
-    const t = setInterval(() => {
-      if (ambulanceActive) return;
-      setTrafficLights((prev) =>
-        prev.map((l) => ({
-          ...l,
-          state: Math.random() < 0.25 ? (l.state === 'green' ? 'red' : 'green') : l.state,
-        }))
-      );
-    }, 6000);
-    return () => clearInterval(t);
-  }, [ambulanceActive]);
-
-  // ── Parking occupancy drift every 9 s ──────────────────────────────────
+  // ── Parking drift every 10 s ──────────────────────────────────────────────
   useEffect(() => {
     const t = setInterval(() => {
       setParking((prev) =>
@@ -87,27 +87,26 @@ export const useSimulation = () => {
           available: Math.max(0, Math.min(p.total, p.available + Math.floor(Math.random() * 5) - 2)),
         }))
       );
-    }, 9000);
+    }, 10000);
     return () => clearInterval(t);
   }, []);
 
-  // ── Agent-log ticker every 3.5 s ───────────────────────────────────────
+  // ── Agent-log ticker every 4 s ────────────────────────────────────────────
   useEffect(() => {
-    // Prime with 6 staggered entries
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 5; i++) {
       setTimeout(() => {
         const tmpl = pick(AGENT_LOG_TEMPLATES);
         pushLog(makeLog(tmpl.agent, pick(tmpl.messages), tmpl.type));
-      }, i * 600);
+      }, i * 700);
     }
     const t = setInterval(() => {
       const tmpl = pick(AGENT_LOG_TEMPLATES);
       pushLog(makeLog(tmpl.agent, pick(tmpl.messages), tmpl.type));
-    }, 3500);
+    }, 4000);
     return () => clearInterval(t);
   }, [pushLog]);
 
-  // ── Ambulance movement ─────────────────────────────────────────────────
+  // ── Ambulance movement every 2 s ─────────────────────────────────────────
   useEffect(() => {
     if (!ambulanceActive) return;
     const t = setInterval(() => {
@@ -116,66 +115,38 @@ export const useSimulation = () => {
         setAmbulanceActive(false);
         ambIdxRef.current = 0;
         setAmbulancePos(AMBULANCE_ROUTE[0]);
-        setTrafficLights((prev) =>
-          prev.map((l) => ({ ...l, state: Math.random() > 0.5 ? 'green' : 'red' }))
-        );
-        pushLog(makeLog(
-          'Ambulance Agent',
-          'Priority path completed — returning to stand-by. Traffic lights normalised.',
-          'ambulance'
-        ));
+        pushLog(makeLog('Ambulance Agent', 'Priority path completed — stand-by resumed.', 'ambulance'));
       } else {
         setAmbulancePos(AMBULANCE_ROUTE[ambIdxRef.current]);
       }
-    }, 1500);
+    }, 2000);
     return () => clearInterval(t);
   }, [ambulanceActive, pushLog]);
 
-  // ── Public API ─────────────────────────────────────────────────────────
+  // ── Public API ────────────────────────────────────────────────────────────
   const activateAmbulance = useCallback(() => {
     if (ambulanceActive) return;
     ambIdxRef.current = 0;
     setAmbulancePos(AMBULANCE_ROUTE[0]);
     setAmbulanceActive(true);
-    setTrafficLights((prev) => prev.map((l) => ({ ...l, state: 'green' })));
-    pushLog(makeLog(
-      'Ambulance Agent',
-      '🚨 PRIORITY PATH ACTIVATED — all intersections set to GREEN',
-      'ambulance'
-    ));
+    pushLog(makeLog('Ambulance Agent', '🚨 PRIORITY PATH ACTIVATED — emergency vehicle en route', 'ambulance'));
   }, [ambulanceActive, pushLog]);
-
-  const toggleTrafficLight = useCallback((id) => {
-    setTrafficLights((prev) =>
-      prev.map((l) => (l.id === id ? { ...l, state: l.state === 'green' ? 'red' : 'green' } : l))
-    );
-  }, []);
 
   const addIncident = useCallback((incident) => {
     const id = `I${String(Date.now()).slice(-5)}`;
     const entry = { ...incident, id, status: 'pending', reportedAt: new Date() };
     setIncidents((prev) => [entry, ...prev]);
-    pushLog(makeLog(
-      'Validation Agent',
-      `New report received — ${incident.type} at ${incident.description?.slice(0, 30) || 'reported location'}. Verification in progress…`,
-      'validation'
-    ));
+    pushLog(makeLog('Validation Agent', `New report received — ${incident.type}. Cross-referencing sensors…`, 'validation'));
     setTimeout(() => {
-      setIncidents((prev) =>
-        prev.map((i) => (i.id === id ? { ...i, status: 'verified' } : i))
-      );
-      pushLog(makeLog(
-        'Validation Agent',
-        `Report #${id} verified via sensor cross-reference. Maintenance team notified.`,
-        'validation'
-      ));
+      setIncidents((prev) => prev.map((i) => (i.id === id ? { ...i, status: 'verified' } : i)));
+      pushLog(makeLog('Validation Agent', `Report #${id} verified. Maintenance team notified.`, 'validation'));
     }, 5000);
   }, [pushLog]);
 
   return {
-    buses, trafficLights, parking, incidents, agentLogs,
+    buses, parking, incidents, agentLogs, roadRoutes,
     ambulanceActive, ambulancePos,
     showReport, setShowReport,
-    activateAmbulance, toggleTrafficLight, addIncident,
+    activateAmbulance, addIncident,
   };
 };
