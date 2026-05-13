@@ -9,6 +9,7 @@ import Reports from './components/Reports';
 import Analytics from './components/Analytics';
 import AgentSettings from './components/AgentSettings';
 import RoutePlanner from './components/RoutePlanner';
+import MetroSchedule from './components/MetroSchedule';
 
 export default function App() {
   const [role, setRole] = useState(null);
@@ -28,6 +29,7 @@ export default function App() {
             <Route path="/analytics" element={<Analytics />}     />
             <Route path="/settings"  element={<AgentSettings />} />
             <Route path="/planner"  element={<RoutePlanner />}  />
+            <Route path="/metro"    element={<MetroSchedule />} />
           </Routes>
         </Layout>
       </BrowserRouter>

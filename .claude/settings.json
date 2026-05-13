@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s \"https://en.wikipedia.org/w/api.php?action=query&titles=Dura,_West_Bank|Al-Zahiriyyeh|Yatta,_West_Bank|Idhna|Al-Samu&prop=coordinates&format=json\")",
+      "Bash(node -e \"const c=[];process.stdin.on\\('data',d=>c.push\\(d\\)\\);process.stdin.on\\('end',\\(\\)=>{const d=JSON.parse\\(c.join\\(''\\)\\);Object.values\\(d.query.pages\\).forEach\\(p=>{if\\(p.coordinates\\)console.log\\(p.title+'|'+p.coordinates[0].lat+'|'+p.coordinates[0].lon\\);}\\);}\\)\")",
+      "Bash(curl -s \"https://en.wikipedia.org/w/api.php?action=query&titles=Taffuh|Ash-Shuyukh,_Hebron|Beit_Fajjar|Deirat|Al-Karmil,_Hebron&prop=coordinates&format=json\")",
+      "WebFetch(domain:en.wikipedia.org)"
+    ]
+  }
+}

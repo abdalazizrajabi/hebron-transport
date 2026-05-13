@@ -1,10 +1,11 @@
 import { NavLink } from 'react-router-dom';
-import { Map, FileText, BarChart2, Settings, Cpu, LogOut, Shield, User, Navigation } from 'lucide-react';
+import { Map, FileText, BarChart2, Settings, Cpu, LogOut, Shield, User, Navigation, Train } from 'lucide-react';
 
 const ALL_NAV = [
   { to: '/',          icon: Map,        label: 'Live Map',      roles: ['admin', 'citizen'] },
   { to: '/reports',   icon: FileText,   label: 'Reports',       roles: ['admin', 'citizen'] },
   { to: '/planner',   icon: Navigation, label: 'Route Planner', roles: ['admin', 'citizen'] },
+  { to: '/metro',     icon: Train,      label: 'Metro',         roles: ['admin', 'citizen'] },
   { to: '/analytics', icon: BarChart2,  label: 'Analytics',     roles: ['admin'] },
   { to: '/settings',  icon: Settings,   label: 'Agent Logic',   roles: ['admin'] },
 ];

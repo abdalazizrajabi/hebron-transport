@@ -1,8 +1,10 @@
 import { useSimulationContext } from '../context/SimulationContext';
 import MapView from './MapView';
 import AgentLog from './AgentLog';
+import NearestParking from './NearestParking';
 import CitizenReportModal from './CitizenReportModal';
 import { Bus, AlertTriangle, Activity, Car, Siren, Zap } from 'lucide-react';
+import { METRO_LINES, ROUTES } from '../data/mockData';
 
 // Agent definitions for the status strip
 const AGENT_DEFS = [
@@ -121,25 +123,28 @@ export default function Dashboard() {
 
           {/* Legend */}
           <div className="absolute top-3 right-3 z-[1000] bg-white/95 backdrop-blur-sm rounded-xl border border-gray-100 shadow-sm px-3 py-2.5 text-xs space-y-1.5">
-            {[
-              { dot: 'bg-blue-500',    label: "H1 → Halhul"  },
-              { dot: 'bg-emerald-500', label: "H2 → Sa'ir"   },
-              { dot: 'bg-orange-500',  label: 'H3 → Yatta'   },
-              { dot: 'bg-violet-500',  label: 'H4 → Dura'    },
-              { dot: 'bg-pink-500',    label: 'H5 → Taffuh'  },
-              { dot: 'bg-amber-400',   label: 'Alt Route'    },
-              { dot: 'bg-red-500',     label: 'Emergency'    },
-            ].map(({ dot, label }) => (
-              <div key={label} className="flex items-center gap-2">
-                <div className={`w-2 h-2 rounded-full ${dot}`} />
-                <span className="text-gray-500">{label}</span>
+            {Object.values(ROUTES).map((r) => (
+              <div key={r.id} className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full" style={{ background: r.color }} />
+                <span className="text-gray-500">{r.id} → {r.name.split('→')[1]?.trim()}</span>
               </div>
             ))}
+            <div className="border-t border-gray-100 pt-1.5 mt-0.5 space-y-1.5">
+              {Object.values(METRO_LINES).map((line) => (
+                <div key={line.id} className="flex items-center gap-2">
+                  <div className="w-3 h-2 rounded-sm" style={{ background: line.color }} />
+                  <span className="text-gray-500">{line.id} — {line.stops[0].name} ↔ {line.stops[line.stops.length - 1].name}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* Agent log — Admin only */}
-        {isAdmin && <AgentLog logs={agentLogs} />}
+        {/* Agent log — Admin only / Nearest Parking — Citizen */}
+        {isAdmin
+          ? <AgentLog logs={agentLogs} />
+          : <NearestParking parking={parking} />
+        }
       </div>
 
       {/* Report modal */}
