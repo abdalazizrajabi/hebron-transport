@@ -19,7 +19,7 @@ const PLACES = [
   { name: 'Al-Hawouz',                   lat: 31.5378, lng: 35.1072, area: 'Neighborhoods' },
   { name: 'Wadi Al-Hariya',              lat: 31.5278, lng: 35.0855, area: 'Neighborhoods' },
   { name: 'Jabal Johar',                 lat: 31.5118, lng: 35.0818, area: 'Neighborhoods' },
-  { name: 'Ras Al-Jura',                 lat: 31.5236, lng: 35.1104, area: 'Neighborhoods' },
+  { name: 'Ras Al-Jura',                 lat: 31.5512, lng: 35.1054, area: 'Neighborhoods' },
   { name: 'Al-Bayader',                  lat: 31.5189, lng: 35.1085, area: 'Neighborhoods' },
   { name: 'Tel Rumeida',                 lat: 31.5277, lng: 35.0976, area: 'Neighborhoods' },
   { name: 'Haret Al-Sheikh',             lat: 31.5264, lng: 35.1021, area: 'Neighborhoods' },
@@ -27,7 +27,7 @@ const PLACES = [
   { name: 'Khaled Ibn Al-Walid',         lat: 31.5355, lng: 35.0852, area: 'Neighborhoods' },
   { name: 'Al-Zeitouneh',                lat: 31.5423, lng: 35.1052, area: 'Neighborhoods' },
   { name: 'Jabal Al-Rehan',              lat: 31.5084, lng: 35.0878, area: 'Neighborhoods' },
-  { name: 'Ein Sara',                    lat: 31.5190, lng: 35.0920, area: 'Neighborhoods' },
+  { name: 'Ein Sara',                    lat: 31.5385, lng: 35.0995, area: 'Neighborhoods' },
   { name: 'Beit Einun',                  lat: 31.5450, lng: 35.1250, area: 'Neighborhoods' },
   { name: 'Al-Ras',                      lat: 31.5330, lng: 35.1070, area: 'Neighborhoods' },
   { name: 'Wadi Al-Tuffah',              lat: 31.5050, lng: 35.0950, area: 'Neighborhoods' },
@@ -43,34 +43,34 @@ const PLACES = [
   { name: 'Hebron Municipality',         lat: 31.5312, lng: 35.0992, area: 'Institutions' },
   { name: 'Hebron Court (Istinaf)',       lat: 31.5280, lng: 35.0960, area: 'Institutions' },
   { name: 'Tarqumiyya Checkpoint',       lat: 31.5876, lng: 34.9628, area: 'Institutions' },
-  // Villages & towns (Hebron Governorate)
-  { name: 'Halhul Center',               lat: 31.5844, lng: 35.0894, area: 'Villages' },
-  { name: "Sa'ir Center",                lat: 31.5648, lng: 35.1694, area: 'Villages' },
-  { name: 'Yatta Center',                lat: 31.4365, lng: 35.1019, area: 'Villages' },
-  { name: 'Dura Center',                 lat: 31.5011, lng: 34.9889, area: 'Villages' },
-  { name: 'Taffuh Center',               lat: 31.5139, lng: 35.0317, area: 'Villages' },
-  { name: 'Tarqumiyya',                  lat: 31.5876, lng: 34.9628, area: 'Villages' },
-  { name: 'Idhna',                       lat: 31.5590, lng: 34.9760, area: 'Villages' },
-  { name: 'Beit Ula',                    lat: 31.5374, lng: 34.9780, area: 'Villages' },
-  { name: "Bani Na'im",                  lat: 31.5191, lng: 35.1726, area: 'Villages' },
-  { name: 'Ash-Shuyukh',                 lat: 31.5530, lng: 35.1600, area: 'Villages' },
-  { name: 'Al-Zahiriyya',                lat: 31.4080, lng: 34.9710, area: 'Villages' },
-  { name: 'Sourif',                      lat: 31.6212, lng: 35.0676, area: 'Villages' },
-  { name: 'Beit Ummer',                  lat: 31.5939, lng: 35.0718, area: 'Villages' },
-  { name: 'Beit Kahil',                  lat: 31.5620, lng: 35.0280, area: 'Villages' },
-  { name: 'Kharas',                      lat: 31.5168, lng: 35.0192, area: 'Villages' },
-  { name: 'Beit Awa',                    lat: 31.5274, lng: 34.9352, area: 'Villages' },
-  { name: 'Deirat',                      lat: 31.4702, lng: 35.1015, area: 'Villages' },
-  { name: 'As-Samu',                     lat: 31.3950, lng: 35.0950, area: 'Villages' },
-  { name: 'Beit Fajar',                  lat: 31.5737, lng: 35.1314, area: 'Villages' },
-  { name: 'Al-Shuyukh Al-Atiqa',         lat: 31.5480, lng: 35.1350, area: 'Villages' },
-  { name: 'Al-Karmel',                   lat: 31.4240, lng: 35.1340, area: 'Villages' },
-  { name: 'Maon',                        lat: 31.3900, lng: 35.1340, area: 'Villages' },
+  // Villages & towns (Hebron Governorate) — coordinates verified via Wikipedia
+  { name: 'Halhul Center',               lat: 31.5789, lng: 35.0992, area: 'Villages' },
+  { name: "Sa'ir Center",                lat: 31.5844, lng: 35.1453, area: 'Villages' },
+  { name: 'Yatta Center',                lat: 31.4478, lng: 35.0900, area: 'Villages' },
+  { name: 'Dura Center',                 lat: 31.5069, lng: 35.0278, area: 'Villages' },
+  { name: 'Taffuh Center',               lat: 31.5392, lng: 35.0531, area: 'Villages' },
+  { name: 'Tarqumiyya',                  lat: 31.5750, lng: 35.0131, area: 'Villages' },
+  { name: 'Idhna',                       lat: 31.5586, lng: 34.9761, area: 'Villages' },
+  { name: 'Beit Ula',                    lat: 31.5961, lng: 35.0289, area: 'Villages' },
+  { name: "Bani Na'im",                  lat: 31.5161, lng: 35.1642, area: 'Villages' },
+  { name: 'Ash-Shuyukh',                 lat: 31.5697, lng: 35.1556, area: 'Villages' },
+  { name: 'Al-Zahiriyya',                lat: 31.4078, lng: 34.9722, area: 'Villages' },
+  { name: 'Sourif',                      lat: 31.6516, lng: 35.0614, area: 'Villages' },
+  { name: 'Beit Ummar',                  lat: 31.6214, lng: 35.1022, area: 'Villages' },
+  { name: 'Beit Kahil',                  lat: 31.5766, lng: 35.0213, area: 'Villages' },
+  { name: 'Kharas',                      lat: 31.6142, lng: 35.0431, area: 'Villages' },
+  { name: 'Beit Awwa',                   lat: 31.5086, lng: 34.9503, area: 'Villages' },
+  { name: 'Deirat',                      lat: 31.4735, lng: 35.0950, area: 'Villages' },
+  { name: 'As-Samu',                     lat: 31.4008, lng: 35.0671, area: 'Villages' },
+  { name: 'Beit Fajjar',                 lat: 31.6060, lng: 35.1070, area: 'Villages' },
+  { name: 'Al-Shuyukh Al-Atiqa',         lat: 31.5780, lng: 35.1580, area: 'Villages' },
+  { name: 'Al-Karmil',                   lat: 31.4236, lng: 35.1331, area: 'Villages' },
+  { name: 'Maon',                        lat: 31.3900, lng: 35.0960, area: 'Villages' },
   { name: 'Yatta Industrial Zone',       lat: 31.4280, lng: 35.0950, area: 'Villages' },
-  { name: 'Al-Burj Village',             lat: 31.4640, lng: 35.0820, area: 'Villages' },
-  { name: 'Deir Samit',                  lat: 31.4950, lng: 34.9660, area: 'Villages' },
-  { name: 'Al-Simiya',                   lat: 31.4730, lng: 34.9570, area: 'Villages' },
-  { name: 'Beit Mirsim',                 lat: 31.4550, lng: 35.0010, area: 'Villages' },
+  { name: 'Al-Burj Village',             lat: 31.4550, lng: 35.0630, area: 'Villages' },
+  { name: 'Deir Samit',                  lat: 31.5228, lng: 34.9742, area: 'Villages' },
+  { name: 'Al-Simiya',                   lat: 31.5239, lng: 34.9689, area: 'Villages' },
+  { name: 'Beit Mirsim',                 lat: 31.4520, lng: 35.0030, area: 'Villages' },
 ];
 
 // ── Leaflet icons ────────────────────────────────────────────────────────────
@@ -96,6 +96,32 @@ function FitBounds({ positions }) {
 
 // Group places by area
 const GROUPS = [...new Set(PLACES.map((p) => p.area))];
+
+// ── SelectPlace — defined outside RoutePlanner so it never remounts on re-render
+const SelectPlace = ({ label, value, onChange, exclude }) => (
+  <div>
+    <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1.5">
+      {label}
+    </label>
+    <div className="relative">
+      <MapPin size={12} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
+      <select
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className="w-full pl-7 pr-3 py-2.5 border border-gray-100 rounded-xl text-sm bg-gray-50 text-gray-700 focus:outline-none appearance-none"
+      >
+        <option value="">Select location…</option>
+        {GROUPS.map((group) => (
+          <optgroup key={group} label={group}>
+            {PLACES.filter((p) => p.area === group && p.name !== exclude).map((p) => (
+              <option key={p.name}>{p.name}</option>
+            ))}
+          </optgroup>
+        ))}
+      </select>
+    </div>
+  </div>
+);
 
 // ── Component ────────────────────────────────────────────────────────────────
 export default function RoutePlanner() {
@@ -133,31 +159,6 @@ export default function RoutePlanner() {
   }, [from, to]);
 
   const swap = () => { setFrom(to); setTo(from); };
-
-  const SelectPlace = ({ label, value, onChange, exclude }) => (
-    <div>
-      <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1.5">
-        {label}
-      </label>
-      <div className="relative">
-        <MapPin size={12} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
-        <select
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          className="w-full pl-7 pr-3 py-2.5 border border-gray-100 rounded-xl text-sm bg-gray-50 text-gray-700 focus:outline-none appearance-none"
-        >
-          <option value="">Select location…</option>
-          {GROUPS.map((group) => (
-            <optgroup key={group} label={group}>
-              {PLACES.filter((p) => p.area === group && p.name !== exclude).map((p) => (
-                <option key={p.name}>{p.name}</option>
-              ))}
-            </optgroup>
-          ))}
-        </select>
-      </div>
-    </div>
-  );
 
   return (
     <div className="flex h-full overflow-hidden">

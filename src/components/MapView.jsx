@@ -26,9 +26,9 @@ const genTimes = ({ firstH, firstM, lastH, lastM, freq }) => {
 
 const busIcon = (routeId) => L.divIcon({
   className: '',
-  iconSize: [34, 34], iconAnchor: [17, 17],
+  iconSize: [34, 34], iconAnchor: [17, 17], popupAnchor: [0, -17],
   html: `<div style="background:${ROUTES[routeId]?.color ?? '#3B82F6'};
-    width:34px;height:34px;border-radius:9px;
+    width:34px;height:34px;border-radius:9px;box-sizing:border-box;
     display:flex;align-items:center;justify-content:center;
     font-size:17px;border:2px solid #fff;
     box-shadow:0 2px 10px rgba(0,0,0,0.18);">🚌</div>`,
@@ -39,8 +39,8 @@ const parkingIcon = (available, total) => {
   const color = pct < 0.1 ? '#ef4444' : pct < 0.3 ? '#f59e0b' : '#22c55e';
   return L.divIcon({
     className: '',
-    iconSize: [36, 36], iconAnchor: [18, 18],
-    html: `<div style="background:#fff;border:2px solid ${color};border-radius:9px;
+    iconSize: [36, 36], iconAnchor: [18, 18], popupAnchor: [0, -18],
+    html: `<div style="background:#fff;border:2px solid ${color};border-radius:9px;box-sizing:border-box;
       width:36px;height:36px;display:flex;flex-direction:column;
       align-items:center;justify-content:center;
       box-shadow:0 2px 8px rgba(0,0,0,0.10);font-family:system-ui;">
@@ -57,9 +57,9 @@ const incidentIcon = (type, status) => {
   const pulse = status === 'pending' ? 'animation:incPulse 1.4s ease-in-out infinite;' : '';
   return L.divIcon({
     className: '',
-    iconSize: [34, 34], iconAnchor: [17, 17],
+    iconSize: [34, 34], iconAnchor: [17, 17], popupAnchor: [0, -17],
     html: `<style>@keyframes incPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.7;transform:scale(1.12)}}</style>
-    <div style="background:${c}18;border:2px solid ${c};border-radius:50%;
+    <div style="background:${c}18;border:2px solid ${c};border-radius:50%;box-sizing:border-box;
       width:34px;height:34px;display:flex;align-items:center;justify-content:center;
       font-size:16px;${pulse}">${emojiMap[type] ?? '⚠️'}</div>`,
   });
@@ -67,8 +67,8 @@ const incidentIcon = (type, status) => {
 
 const metroStopIcon = (color) => L.divIcon({
   className: '',
-  iconSize: [14, 14], iconAnchor: [7, 7],
-  html: `<div style="background:#fff;border:3px solid ${color};border-radius:50%;
+  iconSize: [14, 14], iconAnchor: [7, 7], popupAnchor: [0, -7],
+  html: `<div style="background:#fff;border:3px solid ${color};border-radius:50%;box-sizing:border-box;
     width:14px;height:14px;box-shadow:0 1px 4px rgba(0,0,0,0.30);"></div>`,
 });
 
@@ -78,12 +78,13 @@ const areaIcon = (type) => {
     commercial:  { bg: '#2563eb', emoji: '🏪' },
     residential: { bg: '#059669', emoji: '🏘️' },
     transit:     { bg: '#7c3aed', emoji: '🚉' },
+    village:     { bg: '#0f766e', emoji: '🌿' },
   };
   const { bg, emoji } = cfg[type] ?? { bg: '#6b7280', emoji: '📍' };
   return L.divIcon({
     className: '',
-    iconSize: [30, 30], iconAnchor: [15, 15],
-    html: `<div style="background:${bg};width:30px;height:30px;border-radius:8px;
+    iconSize: [30, 30], iconAnchor: [15, 15], popupAnchor: [0, -15],
+    html: `<div style="background:${bg};width:30px;height:30px;border-radius:8px;box-sizing:border-box;
       display:flex;align-items:center;justify-content:center;font-size:14px;
       border:2px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,0.22);">${emoji}</div>`,
   });
@@ -91,8 +92,8 @@ const areaIcon = (type) => {
 
 const ambulanceIcon = () => L.divIcon({
   className: '',
-  iconSize: [40, 40], iconAnchor: [20, 20],
-  html: `<div style="background:#ef4444;border:2.5px solid #fff;
+  iconSize: [40, 40], iconAnchor: [20, 20], popupAnchor: [0, -20],
+  html: `<div style="background:#ef4444;border:2.5px solid #fff;box-sizing:border-box;
     border-radius:50%;width:40px;height:40px;
     display:flex;align-items:center;justify-content:center;font-size:20px;">🚑</div>`,
 });
@@ -188,18 +189,27 @@ export default function MapView() {
         ))}
 
         {/* ── Metro lines ─────────────────────────────────────────────── */}
-        {layers.metro && Object.values(METRO_LINES).map((line) => (
+        {layers.metro && Object.values(METRO_LINES).flatMap((line) => [
           <Polyline
-            key={line.id}
+            key={`${line.id}-outline`}
+            positions={line.waypoints}
+            color="#ffffff"
+            weight={11}
+            opacity={0.92}
+            lineCap="round"
+            lineJoin="round"
+          />,
+          <Polyline
+            key={`${line.id}-fill`}
             positions={line.waypoints}
             color={line.color}
             weight={7}
-            opacity={0.88}
+            opacity={0.95}
             lineCap="round"
             lineJoin="round"
             eventHandlers={{ click: () => setActiveMetroLine(line) }}
-          />
-        ))}
+          />,
+        ])}
 
         {/* ── Metro stops ─────────────────────────────────────────────── */}
         {layers.metro && Object.values(METRO_LINES).flatMap((line) =>

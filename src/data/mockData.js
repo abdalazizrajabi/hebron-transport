@@ -82,7 +82,10 @@ export const INITIAL_PARKING = [
   { id: 'P02', name: 'Hospital Parking',    lat: 31.5196, lng: 35.0850, total: 80,  available: 45, type: 'hospital'   },
   { id: 'P03', name: 'Old City Parking',    lat: 31.5262, lng: 35.1010, total: 30,  available: 3,  type: 'public'     },
   { id: 'P04', name: 'University Parking',  lat: 31.5075, lng: 35.0825, total: 120, available: 67, type: 'university' },
-  { id: 'P05', name: 'Bab Izone Parking',   lat: 31.5310, lng: 35.0968, total: 40,  available: 28, type: 'public'     },
+  { id: 'P05', name: 'Bab Izone Parking',     lat: 31.5310, lng: 35.0968, total: 40,  available: 28, type: 'public'     },
+  { id: 'P06', name: 'Ein Sara Parking',      lat: 31.5385, lng: 35.0995, total: 60,  available: 31, type: 'public'     },
+  { id: 'P07', name: 'Al-Mahatta Parking',    lat: 31.5580, lng: 35.0910, total: 45,  available: 22, type: 'public'     },
+  { id: 'P08', name: 'Bab Al-Zawiyeh Park.',  lat: 31.5244, lng: 35.0985, total: 35,  available: 6,  type: 'public'     },
 ];
 
 export const INITIAL_INCIDENTS = [
@@ -166,7 +169,6 @@ export const METRO_LINES = {
       [31.5069, 35.0278], // Dura ← M3 xfer  (Wikipedia)
       [31.5392, 35.0531], // Taffuh           (Wikipedia)
       [31.5314, 35.0998], // Manara ← hub     (center)
-      [31.5650, 35.1289], // Beit Einun       (Wikipedia)
       [31.5161, 35.1642], // Bani Na'im       (Wikipedia)
     ],
     stops: [
@@ -177,8 +179,7 @@ export const METRO_LINES = {
       { id: 'M1-5', name: 'Dura',          lat: 31.5069, lng: 35.0278 },
       { id: 'M1-6', name: 'Taffuh',        lat: 31.5392, lng: 35.0531 },
       { id: 'M1-7', name: 'Manara Square', lat: 31.5314, lng: 35.0998 },
-      { id: 'M1-8', name: 'Beit Einun',    lat: 31.5650, lng: 35.1289 },
-      { id: 'M1-9', name: "Bani Na'im",    lat: 31.5161, lng: 35.1642 },
+      { id: 'M1-8', name: "Bani Na'im",    lat: 31.5161, lng: 35.1642 },
     ],
   },
 
@@ -203,20 +204,18 @@ export const METRO_LINES = {
   M3: {
     id: 'M3', name: 'Western Corridor', color: '#2563EB',
     waypoints: [
-      [31.5893, 34.9549], // Tarqumiyya      (estimated)
-      [31.5580, 34.9763], // Idhna           (Nominatim)
-      [31.5223, 34.9771], // Deir Samit      (Nominatim)
+      [31.5750, 35.0131], // Tarqumiyya      (Wikipedia)
+      [31.5586, 34.9761], // Idhna           (Wikipedia)
+      [31.5228, 34.9742], // Deir Samit      (Wikipedia)
       [31.5069, 35.0278], // Dura ← M1 xfer  (Wikipedia)
-      [31.4164, 35.0412], // Al-Simiya       (Nominatim)
-      [31.4110, 35.0469], // Al-Zahiriyya    (Nominatim)
+      [31.4078, 34.9722], // Al-Zahiriyya    (Wikipedia)
     ],
     stops: [
-      { id: 'M3-1', name: 'Tarqumiyya',    lat: 31.5893, lng: 34.9549 },
-      { id: 'M3-2', name: 'Idhna',         lat: 31.5580, lng: 34.9763 },
-      { id: 'M3-3', name: 'Deir Samit',    lat: 31.5223, lng: 34.9771 },
+      { id: 'M3-1', name: 'Tarqumiyya',    lat: 31.5750, lng: 35.0131 },
+      { id: 'M3-2', name: 'Idhna',         lat: 31.5586, lng: 34.9761 },
+      { id: 'M3-3', name: 'Deir Samit',    lat: 31.5228, lng: 34.9742 },
       { id: 'M3-4', name: 'Dura',          lat: 31.5069, lng: 35.0278 },
-      { id: 'M3-5', name: 'Al-Simiya',     lat: 31.4164, lng: 35.0412 },
-      { id: 'M3-6', name: 'Al-Zahiriyya',  lat: 31.4110, lng: 35.0469 },
+      { id: 'M3-5', name: 'Al-Zahiriyya',  lat: 31.4078, lng: 34.9722 },
     ],
   },
 
@@ -224,22 +223,22 @@ export const METRO_LINES = {
     id: 'M4', name: 'North–South Spine', color: '#111827',
     waypoints: [
       [31.5844, 35.1453], // Sa'ir           (Wikipedia)
-      [31.5769, 35.1507], // Ash-Shuyukh     (Nominatim)
+      [31.5697, 35.1556], // Ash-Shuyukh     (Wikipedia)
       [31.5378, 35.1072], // Al-Hawouz       (estimated)
       [31.5314, 35.0998], // Manara ← hub    (center)
       [31.4735, 35.0950], // Deirat          (estimated)
       [31.4478, 35.0900], // Yatta           (Wikipedia)
-      [31.4119, 35.1231], // Al-Karmil       (estimated)
+      [31.4236, 35.1331], // Al-Karmil       (Wikipedia)
       [31.4008, 35.0671], // As-Samu         (Wikipedia)
     ],
     stops: [
       { id: 'M4-1', name: "Sa'ir",         lat: 31.5844, lng: 35.1453 },
-      { id: 'M4-2', name: 'Ash-Shuyukh',   lat: 31.5769, lng: 35.1507 },
+      { id: 'M4-2', name: 'Ash-Shuyukh',   lat: 31.5697, lng: 35.1556 },
       { id: 'M4-3', name: 'Al-Hawouz',     lat: 31.5378, lng: 35.1072 },
       { id: 'M4-4', name: 'Manara Square', lat: 31.5314, lng: 35.0998 },
       { id: 'M4-5', name: 'Deirat',        lat: 31.4735, lng: 35.0950 },
       { id: 'M4-6', name: 'Yatta',         lat: 31.4478, lng: 35.0900 },
-      { id: 'M4-7', name: 'Al-Karmil',     lat: 31.4119, lng: 35.1231 },
+      { id: 'M4-7', name: 'Al-Karmil',     lat: 31.4236, lng: 35.1331 },
       { id: 'M4-8', name: 'As-Samu',       lat: 31.4008, lng: 35.0671 },
     ],
   },
@@ -289,12 +288,12 @@ export const AGENT_LOG_TEMPLATES = [
 // Precise neighborhood centers — all within Hebron city limits
 export const HEBRON_AREAS = [
   { id: 'A01', name: 'Old City (Al-Balad)',  nameAr: 'البلدة القديمة',    lat: 31.5254, lng: 35.1074, type: 'historic',    pop: '~6,000',  desc: 'Ancient walled city; home to the Ibrahimi Mosque and traditional souks.' },
-  { id: 'A02', name: 'Bab Al-Zawiyeh',       nameAr: 'باب الزاوية',       lat: 31.5295, lng: 35.0972, type: 'commercial',  pop: '~12,000', desc: 'Main commercial hub west of the old city; largest retail district in Hebron.' },
+  { id: 'A02', name: 'Bab Al-Zawiyeh',       nameAr: 'باب الزاوية',       lat: 31.5244, lng: 35.0998, type: 'commercial',  pop: '~12,000', desc: 'Main commercial hub west of the old city; largest retail district in Hebron.' },
   { id: 'A03', name: 'Abu Sneineh',          nameAr: 'أبو سنينة',         lat: 31.5448, lng: 35.0905, type: 'residential', pop: '~18,000', desc: 'Densely populated northern hillside neighborhood; major residential zone.' },
   { id: 'A04', name: 'Al-Hawouz',            nameAr: 'الحوز',             lat: 31.5372, lng: 35.1065, type: 'residential', pop: '~14,000', desc: 'Eastern neighborhood with modern housing; growing urban district.' },
-  { id: 'A05', name: 'Wadi Al-Hariya',       nameAr: 'وادي الحرية',       lat: 31.5268, lng: 35.0838, type: 'residential', pop: '~10,000', desc: 'Valley neighborhood west of downtown; mixed residential and commercial strip.' },
+  { id: 'A05', name: 'Wadi Al-Hariya (PPU)', nameAr: 'وادي الحرية',       lat: 31.5111, lng: 35.0945, type: 'residential', pop: '~10,000', desc: 'Valley neighborhood home to Palestine Polytechnic University (PPU); mixed residential and academic district.' },
   { id: 'A06', name: 'Jabal Johar',          nameAr: 'جبل جوهر',          lat: 31.5195, lng: 35.1152, type: 'residential', pop: '~16,000', desc: 'Expanding hillside district in eastern Hebron, overlooking the city.' },
-  { id: 'A07', name: 'Ras Al-Jura',          nameAr: 'رأس الجورة',        lat: 31.5228, lng: 35.1092, type: 'residential', pop: '~8,000',  desc: 'Quiet residential zone southeast of the city center.' },
+  { id: 'A07', name: 'Ras Al-Jura',          nameAr: 'رأس الجورة',        lat: 31.5512, lng: 35.1054, type: 'residential', pop: '~8,000',  desc: 'Quiet residential zone southeast of the city center.' },
   { id: 'A08', name: 'Al-Mahatta',           nameAr: 'المحطة',            lat: 31.5580, lng: 35.0910, type: 'transit',     pop: '~9,000',  desc: 'Northern transit hub; main bus station connecting Hebron to Halhul.' },
   { id: 'A09', name: 'Jabal Al-Rehan',       nameAr: 'جبل الريحان',       lat: 31.5078, lng: 35.0870, type: 'residential', pop: '~11,000', desc: 'Southwest hillside neighborhood with panoramic city views.' },
   { id: 'A10', name: 'Al-Bayader',           nameAr: 'البيادر',           lat: 31.5185, lng: 35.1078, type: 'residential', pop: '~7,000',  desc: 'Quiet southeastern residential area.' },
@@ -303,4 +302,11 @@ export const HEBRON_AREAS = [
   { id: 'A13', name: 'Al-Salam',             nameAr: 'السلام',            lat: 31.5498, lng: 35.0835, type: 'residential', pop: '~13,000', desc: 'Modern planned residential district in northwest Hebron.' },
   { id: 'A14', name: 'Khaled Ibn Al-Walid',  nameAr: 'خالد بن الوليد',    lat: 31.5348, lng: 35.0845, type: 'residential', pop: '~9,500',  desc: 'Mixed residential and commercial area in western Hebron.' },
   { id: 'A15', name: 'Al-Zeitouneh',         nameAr: 'الزيتونة',          lat: 31.5418, lng: 35.1045, type: 'residential', pop: '~8,000',  desc: 'Hillside neighborhood named after its historic olive groves.' },
+  { id: 'A16', name: 'Ein Sara',             nameAr: 'عين سارة',          lat: 31.5385, lng: 35.0995, type: 'transit',     pop: '~5,000',  desc: 'Key transit hub along Ein Sara Road; central Hebron interchange connecting northern neighborhoods.' },
+  { id: 'A17', name: 'Halhul',              nameAr: 'حلحول',             lat: 31.5789, lng: 35.0992, type: 'village',     pop: '~22,000', desc: 'Town north of Hebron; major agricultural hub and entry point to the governorate from Bethlehem.' },
+  { id: 'A18', name: 'Dura',                nameAr: 'دورا',              lat: 31.5069, lng: 35.0278, type: 'village',     pop: '~30,000', desc: 'Large town southwest of Hebron; an important commercial and transport center for the western villages.' },
+  { id: 'A19', name: 'Taffuh',              nameAr: 'تفوح',              lat: 31.5392, lng: 35.0531, type: 'village',     pop: '~7,000',  desc: 'Village west of Hebron known for its apple orchards and agricultural production.' },
+  { id: 'A20', name: 'Yatta',               nameAr: 'يطا',               lat: 31.4478, lng: 35.0900, type: 'village',     pop: '~70,000', desc: 'Large city south of Hebron; one of the most populous localities in the governorate.' },
+  { id: 'A21', name: "Sa'ir",               nameAr: 'سعير',              lat: 31.5844, lng: 35.1453, type: 'village',     pop: '~15,000', desc: 'Town northeast of Hebron; known for its historical significance and large population.' },
+  { id: 'A22', name: 'Beit Ummar',          nameAr: 'بيت أمر',           lat: 31.6214, lng: 35.1022, type: 'village',     pop: '~18,000', desc: 'Town north of Hebron; known for its agriculture, olive groves, and proximity to the main road.' },
 ];
